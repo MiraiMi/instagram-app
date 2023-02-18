@@ -1,13 +1,16 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Components } from '../../../components'
+import { formsValidate } from '../../../helpers/forms'
+import { REQUEST } from '../../../api'
+import { Hooks } from '../../../hooks'
 
 import cls from "../../../assets/styles/login/Login.module.scss"
 import Logo from "../../../assets/images/logo/insta.png"
-import { formsValidate } from '../../../helpers/forms'
-import { REQUEST } from '../../../api'
 
 export default function Login() {
+  const { goToHome } = Hooks.useLocations()
+
     const {
         register,
         handleSubmit,
@@ -15,17 +18,18 @@ export default function Login() {
     } = useForm()
 
     const onSubmit = (data) =>{
-        if(data){
-          const request = REQUEST.LOGIN_USER(data)
+      if(data){
+        const request = REQUEST.LOGIN_USER(data)
 
-          request
-            .then(res => {
-              const data = res.data;
+        request
+          .then(res => {
+            const data = res.data;
 
-              localStorage.setItem("access", data.access);
-              localStorage.setItem("refresh", data.refresh)
-            })
-        }
+            localStorage.setItem("access", data.access);
+            localStorage.setItem("refresh", data.refresh);
+            goToHome();
+          })
+      }
     }
 
   return (
