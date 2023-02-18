@@ -1,4 +1,5 @@
 
 export const requestPath = {
-    createUser: "/users/"
+    createUser: "/users/",
+    loginUser: "/token/"
 }
